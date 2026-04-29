@@ -654,7 +654,7 @@ function CompIcon({ state }) {
 }
 const testimonialsData = [
   {
-    name: "Dr. Ananya Sharma",
+    name: "Dr. Rakesh singh",
     spec: "Dermatologist",
     city: "Bengaluru",
     quote:

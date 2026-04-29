@@ -52,7 +52,7 @@ export default function VideoSection() {
         <video
           ref={videoRef}
           src="/computerview.mp4" // 👈 replace this
-          muted
+          // muted
           loop
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
