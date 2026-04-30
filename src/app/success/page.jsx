@@ -9,6 +9,11 @@ function SuccessContent() {
   const searchParams = useSearchParams();
   const leadId = searchParams.get("leadId");
   const paymentId = searchParams.get("paymentId");
+
+  // 1. EXTRACT DYNAMIC PLAN AND AMOUNT FROM URL
+  const amount = searchParams.get("amount") || "799";
+  const planName = searchParams.get("plan") || "Premium Trial";
+
   const [isUpdating, setIsUpdating] = useState(true);
 
   useEffect(() => {
@@ -24,6 +29,16 @@ function SuccessContent() {
               paymentId: paymentId,
             }),
           });
+
+          // 2. DYNAMIC META PIXEL TRACKING
+          if (window.fbq) {
+            window.fbq("track", "Purchase", {
+              value: parseInt(amount), // Tracks actual amount paid
+              currency: "INR",
+              content_name: planName, // Tracks actual plan bought
+              content_category: "Social Media Services",
+            });
+          }
         } catch (error) {
           console.error("Failed to update status:", error);
         }
@@ -33,7 +48,7 @@ function SuccessContent() {
     };
 
     updatePaymentStatus();
-  }, [leadId, paymentId]);
+  }, [leadId, paymentId, amount, planName]);
 
   return (
     <div className="max-w-md w-full bg-white rounded-[2rem] p-8 md:p-10 shadow-2xl shadow-slate-200/50 text-center border border-slate-100 relative overflow-hidden">
@@ -55,21 +70,23 @@ function SuccessContent() {
         Payment Successful!
       </h1>
       <p className="text-slate-500 mb-8 text-sm md:text-base leading-relaxed">
-        Welcome to Palera Design. Your premium trial is now active. We've sent
-        your receipt and onboarding details to your email.
+        Welcome to Palera Design. Your {planName} is now active. We've sent your
+        receipt and onboarding details to your email.
       </p>
 
       {/* Order Summary Box */}
       <div className="bg-slate-50 rounded-2xl p-5 mb-8 text-left border border-slate-100">
         <div className="flex justify-between items-center mb-3">
           <span className="text-slate-500 text-sm font-medium">Plan</span>
-          <span className="font-bold text-[#0A1628]">Premium Trial</span>
+          {/* 3. RENDER DYNAMIC PLAN */}
+          <span className="font-bold text-[#0A1628]">{planName}</span>
         </div>
         <div className="flex justify-between items-center mb-3">
           <span className="text-slate-500 text-sm font-medium">
             Amount Paid
           </span>
-          <span className="font-bold text-[#0A1628]">₹799.00</span>
+          {/* 4. RENDER DYNAMIC AMOUNT */}
+          <span className="font-bold text-[#0A1628]">₹{amount}.00</span>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-slate-500 text-sm font-medium">Status</span>

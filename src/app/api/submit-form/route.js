@@ -1,17 +1,22 @@
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
+// 1. Define the Schema with plan and amount included
 const leadSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   phone: { type: String, required: true },
+  plan: { type: String, default: "Premium Trial" }, // 👈 Added
+  amount: { type: Number, default: 799 }, // 👈 Added
   status: { type: String, default: "Pending Payment" },
   paymentId: { type: String, default: null },
   createdAt: { type: Date, default: Date.now },
 });
 
+// Prevent Mongoose from recompiling the model
 const Lead = mongoose.models.Lead || mongoose.model("Lead", leadSchema);
 
+// 2. Database Connection Function
 const connectDB = async () => {
   if (mongoose.connections[0].readyState) return;
   try {
@@ -28,7 +33,8 @@ export async function POST(request) {
     await connectDB();
     const body = await request.json();
 
-    const { name, email, phone } = body;
+    // 👉 THE FIX: We must extract `plan` and `amount` from the incoming request body
+    const { name, email, phone, plan, amount } = body;
 
     if (!name || !email || !phone) {
       return NextResponse.json(
@@ -37,8 +43,14 @@ export async function POST(request) {
       );
     }
 
-    // Save to database (paymentId will default to null initially)
-    const newLead = await Lead.create({ name, email, phone });
+    // 👉 THE FIX: Tell Mongoose to save the plan and amount in the database
+    const newLead = await Lead.create({
+      name,
+      email,
+      phone,
+      plan: plan || "Premium Trial",
+      amount: amount || 799,
+    });
 
     return NextResponse.json(
       { message: "Lead saved successfully", lead: newLead },

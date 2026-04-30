@@ -382,6 +382,10 @@ export default function TrialOffer() {
                     }}
                   >
                     <button
+                      onClick={() =>
+                        (window.location.href =
+                          "/checkout?plan=Trial Pack Yearly&price=799")
+                      }
                       className="shadow-lift font-display"
                       style={{
                         width: "100%",
