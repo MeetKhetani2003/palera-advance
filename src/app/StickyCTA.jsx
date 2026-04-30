@@ -14,7 +14,6 @@ export default function MobileCTA() {
     "Physiotherapists",
     "Physicians",
     "Pathologists",
-
     "Pediatricians",
     "Orthopedics",
     "Cardiologists",
@@ -73,17 +72,20 @@ export default function MobileCTA() {
   return (
     <div
       id="mobcta"
-      className={`fixed inset-x-0 bottom-0 z-40 md:hidden px-4 pb-6 transition-transform duration-500 ease-in-out ${
+      // REMOVED px-4 and pb-6 here so it docks to the edges perfectly
+      className={`fixed inset-x-0 bottom-0 z-40 md:hidden transition-transform duration-500 ease-in-out ${
         isVisible ? "translate-y-0" : "translate-y-[120%]"
       }`}
     >
       <div
         className="relative shadow-2xl flex items-center gap-3"
         style={{
-          padding: "20px 16px 12px 16px",
+          // ADDED env(safe-area-inset-bottom) to handle iOS home bar padding gracefully
+          padding: "20px 16px calc(12px + env(safe-area-inset-bottom)) 16px",
           background: "rgba(10, 22, 40, 0.98)",
           backdropFilter: "blur(12px)",
-          border: "1px solid rgba(255,255,255,0.15)",
+          // Changed to borderTop only for a cleaner full-width look
+          borderTop: "1px solid rgba(255,255,255,0.15)",
           borderRadius: "16px 16px 0 0",
         }}
       >

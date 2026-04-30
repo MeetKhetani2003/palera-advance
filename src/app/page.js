@@ -654,20 +654,9 @@ function CompIcon({ state }) {
 }
 const testimonialsData = [
   {
-    name: "Dr. Rakesh singh",
-    spec: "Dermatologist",
-    city: "Bengaluru",
-    quote:
-      "Within 6 weeks our Instagram inquiries doubled. The festival posts feel personal — patients message us thanking us for them.",
-    tone: "mint",
-    avatarBg: "#00C2A8",
-    avatarFg: "#06231E",
-    bgClass: "stripe-mint",
-  },
-  {
-    name: "Dr. Ramesh Iyer",
-    spec: "Cardiologist",
-    city: "Chennai",
+    name: "Dr. Rita D. Master",
+    spec: "Naturopathy Consultant",
+    city: "Mumbai",
     quote:
       "I used to hire freelancers and chase them every Friday. Palera just shows up — daily, on-brand, on-time. That alone is worth it.",
     tone: "gold",
@@ -676,31 +665,9 @@ const testimonialsData = [
     bgClass: "stripe-gold",
   },
   {
-    name: "Dr. Pooja Mehta",
-    spec: "Gynecologist",
-    city: "Mumbai",
-    quote:
-      "The reels they make for us actually rank. We had a 14× spike on a World Menstrual Hygiene Day reel. Real impact.",
-    tone: "navy",
-    avatarBg: "#00C2A8",
-    avatarFg: "#06231E",
-    bgClass: "stripe-navy",
-  },
-  {
-    name: "Dr. Faisal Khan",
-    spec: "Orthopedist",
-    city: "Hyderabad",
-    quote:
-      "I almost cancelled before the trial ended. By week 3, the bookings spoke. Stayed on the yearly plan ever since.",
-    tone: "mint",
-    avatarBg: "#00C2A8",
-    avatarFg: "#06231E",
-    bgClass: "stripe-mint",
-  },
-  {
-    name: "Dr. Aarti Deshpande",
-    spec: "Pediatrician",
-    city: "Pune",
+    name: "Dr. Ankur Batra",
+    spec: "Senior Interventional Cardiologist",
+    city: "Sonepat",
     quote:
       "Their team understands medical sensitivity. Nothing tone-deaf, nothing salesy. Patients trust the content.",
     tone: "gold",
@@ -709,9 +676,9 @@ const testimonialsData = [
     bgClass: "stripe-gold",
   },
   {
-    name: "Dr. Vivek Bansal",
-    spec: "Dentist",
-    city: "Delhi",
+    name: "Dr. C.P. Gupta",
+    spec: "Sr. Pathologist",
+    city: "Kota",
     quote:
       "Onboarding took five minutes. The consistency since has been the best marketing investment my clinic has made.",
     tone: "navy",
@@ -720,15 +687,48 @@ const testimonialsData = [
     bgClass: "stripe-navy",
   },
   {
-    name: "Dr. Reema Joshi",
-    spec: "ENT Specialist",
-    city: "Ahmedabad",
+    name: "Dr. Saurabh Kumar Rai",
+    spec: "Consultant Interventional Radiology",
+    city: "Varanasi",
     quote:
-      "The custom branding is seamless — every post looks like my clinic made it. Followers grew 5× in 3 months.",
+      "Honestly, I was hesitant to trust at ₹799. But the 7-day money-back guarantee gave me confidence to try. Best decision of the year. Content, service, branding — all top class. Already referred 4 doctor friends.",
     tone: "mint",
     avatarBg: "#00C2A8",
     avatarFg: "#06231E",
     bgClass: "stripe-mint",
+  },
+  {
+    name: "Dr. Rakesh Singh",
+    spec: "Pediatrician",
+    city: "Raipur",
+    quote:
+      "What I loved most — they actually understand healthcare. Parenting tips, vaccination reminders, awareness days — everything is relevant to my specialty. My clinic logo and branding look perfect on every post. Worth every rupee.",
+    tone: "mint",
+    avatarBg: "#00C2A8",
+    avatarFg: "#06231E",
+    bgClass: "stripe-mint",
+  },
+  {
+    name: "Dr. Amit Patel",
+    spec: "Dermatologist",
+    city: "Surat",
+    quote:
+      "Took the trial just to test the quality. Within 7 days I was convinced — upgraded to yearly. Their team replies instantly on WhatsApp. Even my staff is impressed when I show them the posts.",
+    tone: "navy",
+    avatarBg: "#00C2A8",
+    avatarFg: "#06231E",
+    bgClass: "stripe-navy",
+  },
+  {
+    name: "Dr. Prakash Paltye",
+    spec: "Ayurvedic Doctor",
+    city: "Tumkur",
+    quote:
+      "Finding good content for Ayurveda is hard — most agencies only know modern medicine. Palera understood my specialty deeply. Herbal remedies, panchakarma, lifestyle tips — all covered authentically. My patients actually relate to it. Thank you, team! 🙏",
+    tone: "gold",
+    avatarBg: "#0A1628",
+    avatarFg: "#F0B429",
+    bgClass: "stripe-gold",
   },
 ];
 const marqueeItems = [
@@ -1604,22 +1604,6 @@ export default function PaleraDesignPage() {
                   ],
                   cta: "Choose Reel Pack 6",
                   highlight: false,
-                },
-                {
-                  tag: "Reel pack 12 · yearly",
-                  title: "144 premium reels + free image pack",
-                  price: "₹25,000",
-                  unit: "/ year",
-                  sub: "12 reels / month · Image pack worth ₹4,999 free",
-                  features: [
-                    "12 premium reels per month",
-                    "Priority delivery",
-                    "Trend-based + promotional formats",
-                    "Dedicated support team",
-                    "Best price-per-reel",
-                  ],
-                  cta: "Choose Reel Pack 12",
-                  highlight: true,
                 },
               ].map(
                 ({
@@ -2772,78 +2756,6 @@ export default function PaleraDesignPage() {
                 Doctors' first choice for premium social media content. Built in
                 India, for healthcare.
               </p>
-            </div>
-            <div>
-              <div
-                style={{
-                  fontSize: 12,
-                  fontFamily: "JetBrains Mono",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.18em",
-                  color: "rgba(255,255,255,.5)",
-                }}
-              >
-                Contact
-              </div>
-              <ul
-                style={{
-                  marginTop: 16,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 8,
-                  fontSize: 14,
-                }}
-              >
-                {[
-                  "WhatsApp · +91 ••• ••• ••••",
-                  "hello@paleradesign.in",
-                  "Phone · +91 ••• ••• ••••",
-                ].map((t) => (
-                  <li key={t}>
-                    <a
-                      href="#"
-                      style={{ color: "inherit", textDecoration: "none" }}
-                    >
-                      {t}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <div
-                style={{
-                  fontSize: 12,
-                  fontFamily: "JetBrains Mono",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.18em",
-                  color: "rgba(255,255,255,.5)",
-                }}
-              >
-                Legal
-              </div>
-              <ul
-                style={{
-                  marginTop: 16,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 8,
-                  fontSize: 14,
-                }}
-              >
-                {["Privacy Policy", "Terms of Service", "Refund Policy"].map(
-                  (t) => (
-                    <li key={t}>
-                      <a
-                        href="#"
-                        style={{ color: "inherit", textDecoration: "none" }}
-                      >
-                        {t}
-                      </a>
-                    </li>
-                  ),
-                )}
-              </ul>
             </div>
           </div>
           <div
