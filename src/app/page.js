@@ -1463,10 +1463,11 @@ export default function PaleraDesignPage() {
           id="demo"
           style={{
             // padding: "64px 24px",
-            background: "var(--navy-900)",
+            // background: "var(--navy-900)",
             color: "#fff",
             position: "relative",
             overflow: "hidden",
+            scrollMarginTop: "100px",
           }}
         >
           <div
@@ -1512,6 +1513,7 @@ export default function PaleraDesignPage() {
                     fontWeight: 800,
                     fontSize: "clamp(28px,4vw,44px)",
                     lineHeight: 1.08,
+                    color: "var(--navy-900)",
                   }}
                 >
                   A glimpse of what we make every day.
@@ -2725,6 +2727,7 @@ export default function PaleraDesignPage() {
         {/* ══ FOOTER ══ */}
         <footer
           style={{
+            marginBottom: 64,
             background: "var(--navy-950)",
             color: "rgba(255,255,255,.7)",
             padding: "48px 24px",
@@ -2767,13 +2770,19 @@ export default function PaleraDesignPage() {
               display: "flex",
               justifyContent: "space-between",
               gap: 12,
+              alignItems: "center",
               fontSize: 12,
               color: "rgba(255,255,255,.5)",
               flexWrap: "wrap",
             }}
           >
-            <div>© 2026 Palera Design. All rights reserved.</div>
-            <div style={{ fontFamily: "JetBrains Mono" }}>
+            <div className="flex items-center justify-center w-full">
+              © 2026 Palera Design. All rights reserved.
+            </div>
+            <div
+              className="flex items-center justify-center w-full"
+              style={{ fontFamily: "JetBrains Mono" }}
+            >
               Made in India · for Indian doctors
             </div>
           </div>
