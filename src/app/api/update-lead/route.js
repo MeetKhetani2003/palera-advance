@@ -6,6 +6,9 @@ const leadSchema = new mongoose.Schema({
   name: String,
   email: String,
   phone: String,
+  speciality: String,
+  amount: { type: Number, default: 799 },
+  plan: { type: String, default: "Premium Trial" },
   status: { type: String, default: "Pending Payment" },
   paymentId: String,
   createdAt: { type: Date, default: Date.now },
@@ -21,7 +24,8 @@ const connectDB = async () => {
 export async function PUT(request) {
   try {
     await connectDB();
-    const { id, status, paymentId } = await request.json();
+    const { id, status, paymentId, speciality, amount, plan } =
+      await request.json();
 
     if (!id || !status) {
       return NextResponse.json({ error: "Missing data" }, { status: 400 });
@@ -30,7 +34,13 @@ export async function PUT(request) {
     // Update the document in MongoDB
     const updatedLead = await Lead.findByIdAndUpdate(
       id,
-      { status: status, paymentId: paymentId },
+      {
+        status: status,
+        paymentId: paymentId,
+        speciality: speciality,
+        amount: amount,
+        plan: plan,
+      },
       { new: true },
     );
 

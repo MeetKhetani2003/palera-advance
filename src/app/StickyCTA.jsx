@@ -133,7 +133,7 @@ export default function MobileCTA() {
         </div>
 
         <a
-          href="/checkout?plan=Trial Pack&price=799"
+          href="#trial"
           className="btn-primary flex-shrink-0 flex items-center gap-2"
           style={{
             padding: "10px 14px",

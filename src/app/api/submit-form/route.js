@@ -8,6 +8,7 @@ const leadSchema = new mongoose.Schema({
   phone: { type: String, required: true },
   plan: { type: String, default: "Premium Trial" }, // 👈 Added
   amount: { type: Number, default: 799 }, // 👈 Added
+  speciality: { type: String, required: true }, // 👈 Added
   status: { type: String, default: "Pending Payment" },
   paymentId: { type: String, default: null },
   createdAt: { type: Date, default: Date.now },
@@ -34,9 +35,9 @@ export async function POST(request) {
     const body = await request.json();
 
     // 👉 THE FIX: We must extract `plan` and `amount` from the incoming request body
-    const { name, email, phone, plan, amount } = body;
+    const { name, email, phone, plan, amount, speciality } = body;
 
-    if (!name || !email || !phone) {
+    if (!name || !email || !phone || !speciality) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 },
@@ -50,6 +51,7 @@ export async function POST(request) {
       phone,
       plan: plan || "Premium Trial",
       amount: amount || 799,
+      speciality: speciality || "",
     });
 
     return NextResponse.json(

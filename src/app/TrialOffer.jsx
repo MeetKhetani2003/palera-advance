@@ -244,7 +244,7 @@ export default function TrialOffer() {
                           letterSpacing: "0.12em",
                         }}
                       >
-                        / month · one-time trial
+                        / month
                       </div>
                     </div>
                   </div>
@@ -469,7 +469,7 @@ export default function TrialOffer() {
                         >
                           <path d="M22 16.92V21a1 1 0 01-1.1 1A19 19 0 012 4.1 1 1 0 013 3h4.09a1 1 0 011 .75l1 4a1 1 0 01-.27 1L7 10a16 16 0 007 7l1.25-1.82a1 1 0 011-.27l4 1a1 1 0 01.75 1z" />
                         </svg>
-                        Our team contacts you within 10 mins
+                        Our team contacts you within 2 hours
                       </li>
                       <li
                         style={{

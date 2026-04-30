@@ -1,70 +1,57 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Volume2, VolumeX } from "lucide-react";
+import { useRef, useState } from "react";
+import { Play, Pause } from "lucide-react";
 
 export default function VideoSection() {
   const videoRef = useRef(null);
-  const containerRef = useRef(null);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  // Scroll-based play/pause (MUST BE MUTED TO WORK)
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!videoRef.current) return;
+  const togglePlay = (e) => {
+    e?.stopPropagation(); // Prevent duplicate clicks from the container
 
-        if (entry.isIntersecting) {
-          // Play automatically, but it will be muted
-          videoRef.current.play().catch(() => console.log("Autoplay blocked"));
-        } else {
-          videoRef.current.pause();
-        }
-      },
-      { threshold: 0.6 },
-    );
-
-    if (containerRef.current) observer.observe(containerRef.current);
-
-    return () => observer.disconnect();
-  }, []);
-
-  const toggleMute = () => {
     if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(videoRef.current.muted);
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        // Automatically unmute before playing
+        videoRef.current.muted = false;
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
     }
   };
 
   return (
-    <div ref={containerRef} className="relative max-w-5xl mx-auto">
+    <div className="relative max-w-5xl mx-auto">
+      {/* "group" class here allows the button to reappear on hover */}
       <div className="relative aspect-video rounded-2xl overflow-hidden bg-black shadow-xl group">
+        {/* Clickable Video */}
         <video
           ref={videoRef}
           src="/computerview.mp4"
-          muted={isMuted} // Controlled by React state now
           loop
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
+          onClick={togglePlay}
+          className="absolute inset-0 w-full h-full object-cover cursor-pointer"
         />
 
-        {/* Floating Unmute Button */}
-        <button
-          onClick={toggleMute}
-          className="absolute bottom-6 right-6 z-10 flex items-center gap-2 bg-black/60 hover:bg-black/80 backdrop-blur-md text-white px-4 py-2 rounded-full transition-all"
-        >
-          {isMuted ? (
-            <>
-              <VolumeX size={18} />
-              <span className="text-sm font-medium">Tap for Sound</span>
-            </>
-          ) : (
-            <>
-              <Volume2 size={18} />
-              <span className="text-sm font-medium">Sound On</span>
-            </>
-          )}
-        </button>
+        {/* Centered, Frosted-Glass Play/Pause Overlay */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <button
+            onClick={togglePlay}
+            className={`pointer-events-auto flex items-center justify-center w-20 h-20 bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 text-white rounded-full transition-all duration-300 shadow-2xl
+              ${isPlaying ? "opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100" : "opacity-100 scale-100"}
+            `}
+          >
+            {isPlaying ? (
+              <Pause size={32} fill="currentColor" />
+            ) : (
+              // ml-1 optically centers the play triangle inside the circle
+              <Play size={32} fill="currentColor" className="ml-1" />
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

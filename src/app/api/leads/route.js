@@ -6,6 +6,9 @@ const leadSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   phone: { type: String, required: true },
+  speciality: { type: String, required: true },
+  amount: { type: Number, default: 799 },
+  plan: { type: String, default: "Premium Trial" },
   status: { type: String, default: "Pending Payment" },
   createdAt: { type: Date, default: Date.now },
 });

@@ -8,6 +8,9 @@ import FeaturesMarquee from "./Grid";
 import TestimonialSection from "./Testimonial";
 import TrustedClinicsMarquee from "./Marqueelogo";
 import TrialOffer from "./TrialOffer";
+import CountUp from "react-countup";
+import MetricsSection from "./Metric";
+import { CheckCircle } from "lucide-react";
 
 /* ─────────────────────────────────────────
   GLOBAL STYLES  (injected once via <style>)
@@ -380,6 +383,7 @@ const faqs = [
     "What exactly do I get in the ₹799 trial pack?",
     "You get 30 professionally designed image creatives + 3 high-performance reels — all customized with your clinic branding, delivered over 30 days.",
   ],
+
   [
     "Do I need to create any content myself?",
     "No. Our team handles everything — design, branding, festival coverage, awareness days. You just post.",
@@ -390,7 +394,7 @@ const faqs = [
   ],
   [
     "Do I need to post the content myself?",
-    "Yes. We deliver ready-to-post content via WhatsApp / Google Drive. Posting takes less than 2 minutes a day. (Posting service available as add-on if needed.)",
+    "Yes. We deliver ready-to-post content via WhatsApp. Posting takes less than 2 minutes a day. (Posting service available as add-on if needed.)",
   ],
   [
     "What if I'm not happy with the designs?",
@@ -418,11 +422,11 @@ const faqs = [
   ],
   [
     "How will I receive the content?",
-    "All content is shared digitally via WhatsApp or Google Drive — easy to download and post.",
+    "We share your content daily on WhatsApp — ready to download and post directly. No logins, no portals, no complications. Just open WhatsApp every morning and your fresh creative is waiting for you.",
   ],
   [
     "Do reels include voice-over or just visuals?",
-    "Reels come with engaging visuals and trending background music. Voice-overs can be added based on your requirements.",
+    "Yes — both. Every reel comes loaded with professional voice-overs, engaging visuals, and trending background music. Ready to post, ready to perform.",
   ],
   [
     "Is this suitable for a brand-new clinic?",
@@ -654,7 +658,7 @@ function CompIcon({ state }) {
 }
 const testimonialsData = [
   {
-    name: "Dr. Rita D. Master",
+    name: "Dr. Rita Master",
     spec: "Naturopathy Consultant",
     city: "Mumbai",
     quote:
@@ -687,7 +691,7 @@ const testimonialsData = [
     bgClass: "stripe-navy",
   },
   {
-    name: "Dr. Saurabh Kumar Rai",
+    name: "Dr. Saurabh Kumar",
     spec: "Consultant Interventional Radiology",
     city: "Varanasi",
     quote:
@@ -959,7 +963,7 @@ export default function PaleraDesignPage() {
             ))}
           </nav>
           <a
-            href="/checkout?plan=Trial Pack&price=799"
+            href="#trial"
             className="btn-primary"
             style={{ padding: "10px 16px", fontSize: 14 }}
           >
@@ -1160,16 +1164,24 @@ export default function PaleraDesignPage() {
         </section>
         {/* ══ METRICS BAR ══ */}
         <section style={{ background: "var(--navy-900)", color: "#fff" }}>
+          {/* 1. Put this array inside your component, before the return statement */}
+
+          {/* 2. Replace your existing metrics-grid div with this: */}
           <div
             className="metrics-grid"
             style={{ maxWidth: 1280, margin: "0 auto", padding: "48px 24px" }}
           >
             {[
-              ["2,000+", "Happy doctors"],
-              ["5,00,000+", "Creatives delivered"],
-              ["25+", "Specialties served"],
-              ["4.9★", "Average rating"],
-            ].map(([val, label]) => (
+              { end: 2000, suffix: "+", label: "Happy doctors" },
+              {
+                end: 500000,
+                suffix: "+",
+                label: "Creatives delivered",
+                isIndianFormat: true,
+              },
+              { end: 25, suffix: "+", label: "Specialties served" },
+              { end: 4.9, suffix: "★", label: "Average rating", decimals: 1 },
+            ].map(({ end, suffix, label, decimals, isIndianFormat }) => (
               <div key={label} className="reveal">
                 <div
                   style={{
@@ -1181,16 +1193,43 @@ export default function PaleraDesignPage() {
                     letterSpacing: "-0.04em",
                   }}
                 >
-                  {val}
+                  <CountUp
+                    end={end}
+                    duration={3} // Adjusted to 3 seconds so it doesn't feel too slow while scrolling
+                    enableScrollSpy={true} // 👈 Forces it to wait until visible on screen
+                    scrollSpyOnce={true} // 👈 Ensures it only animates the first time you scroll to it
+                    formattingFn={(value) => {
+                      let formattedNumber;
+
+                      // Format the number properly first
+                      if (decimals) {
+                        formattedNumber = value.toFixed(decimals);
+                      } else if (isIndianFormat) {
+                        formattedNumber = new Intl.NumberFormat("en-IN").format(
+                          value,
+                        );
+                      } else {
+                        formattedNumber = new Intl.NumberFormat("en-US").format(
+                          value,
+                        );
+                      }
+
+                      // 👈 Manually append the suffix at the end of the formatted number
+                      return suffix
+                        ? `${formattedNumber}${suffix}`
+                        : formattedNumber;
+                    }}
+                  />
                 </div>
+
+                {/* Label Text */}
                 <div
                   style={{
-                    marginTop: 8,
-                    fontSize: 12,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.18em",
-                    color: "rgba(255,255,255,.6)",
-                    fontFamily: "JetBrains Mono",
+                    marginTop: "8px",
+                    fontFamily: "Plus Jakarta Sans",
+                    fontSize: "1rem",
+                    fontWeight: 600,
+                    color: "#64748B",
                   }}
                 >
                   {label}
@@ -1588,15 +1627,19 @@ export default function PaleraDesignPage() {
                         fontWeight: 700,
                         fontSize: 14,
                         textDecoration: "none",
-                        background: highlight ? "var(--teal-500)" : "#fff",
-                        color: highlight ? "var(--navy-900)" : "var(--ink)",
+                        background: highlight
+                          ? "var(--teal-500)"
+                          : "var(--navy-900)",
+                        color: highlight
+                          ? "var(--navy-900)"
+                          : "var(--teal-500)",
                         border: highlight
                           ? "none"
                           : "1px solid rgba(0,0,0,.12)",
                         transition: "all .18s",
                       }}
                     >
-                      {cta} <ArrowRight />
+                      <CheckCircle size={16} /> {cta} <ArrowRight />
                     </a>
                   </article>
                 ),
@@ -2099,7 +2142,7 @@ export default function PaleraDesignPage() {
                 }}
               >
                 <a
-                  href="#trial"
+                  href="/checkout?plan=Trial%20pack&price=799"
                   className="btn-primary"
                   style={{ fontSize: 16 }}
                 >

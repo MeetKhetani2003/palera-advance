@@ -231,7 +231,11 @@ export default function AdminDashboard() {
                       </span>
                     </div>
                   </div>
-
+                  <div>
+                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-1 block">
+                      {lead.speciality}
+                    </span>
+                  </div>
                   <div className="text-right flex flex-col items-end">
                     <div className="text-sm font-bold text-[#0A1628]">
                       ₹{lead.amount || 799}

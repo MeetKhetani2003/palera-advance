@@ -2,8 +2,28 @@
 
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
-
+import { ArrowLeft, ChevronDown } from "lucide-react";
+const SPECIALTIES = [
+  "Dentists",
+  "Dermatologists",
+  "Gynecologists",
+  "Physicians",
+  "Pediatricians",
+  "Orthopedics",
+  "Cardiologists",
+  "Ophthalmologists",
+  "Ayurvedic Doctors",
+  "ENT Specialists",
+  "Neurologists",
+  "Physiotherapists",
+  "Nutritionists",
+  "Homeopaths",
+  "Oncologists",
+  "Nephrologists",
+  "Radiologists",
+  "Pathologists",
+  "Spine Surgeons",
+];
 function CheckoutContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -12,7 +32,12 @@ function CheckoutContent() {
   const planName = searchParams.get("plan") || "Premium Trial";
   const price = parseInt(searchParams.get("price")) || 799;
 
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    speciality: "",
+  });
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleInputChange = (e) => {
@@ -20,7 +45,12 @@ function CheckoutContent() {
   };
 
   const handlePayment = async () => {
-    if (!formData.name || !formData.email || !formData.phone) {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.speciality
+    ) {
       alert("Please fill in all details first.");
       return;
     }
@@ -145,6 +175,34 @@ function CheckoutContent() {
               />
             </div>
           </div>
+          <div className="group">
+            <label className="block text-[13px] font-bold text-[#0A1628] mb-2 uppercase tracking-wider opacity-90 transition-colors group-focus-within:text-[#00C39A]">
+              Speciality *
+            </label>
+            <div className="relative">
+              <select
+                name="speciality"
+                value={formData.speciality}
+                onChange={handleInputChange}
+                className={`w-full bg-slate-50 border-2 border-slate-100 rounded-xl px-4 py-4 focus:bg-white focus:border-[#00C39A] focus:ring-4 focus:ring-[#00C39A]/5 outline-none transition-all duration-200 appearance-none cursor-pointer ${
+                  formData.speciality ? "text-slate-900" : "text-slate-400"
+                }`}
+              >
+                <option value="" disabled>
+                  Select your speciality
+                </option>
+                {SPECIALTIES.map((spec) => (
+                  <option key={spec} value={spec}>
+                    {spec}
+                  </option>
+                ))}
+              </select>
+              {/* Custom Dropdown Arrow */}
+              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400">
+                <ChevronDown size={20} />
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="mt-10 p-6 bg-slate-50 rounded-2xl flex justify-between items-center">
@@ -152,7 +210,7 @@ function CheckoutContent() {
             <p className="font-bold text-lg text-[#0A1628]">{planName}</p>
             <p className="text-[#00C39A] font-mono text-xs">SELECTED PLAN</p>
           </div>
-          <div className="text-2xl font-bold text-[#0A1628]">₹{price}/-</div>
+          <div className="text-2xl font-bold text-[#0A1628]">₹{price}</div>
         </div>
       </div>
 
