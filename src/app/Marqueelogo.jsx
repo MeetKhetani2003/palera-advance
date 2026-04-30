@@ -67,15 +67,15 @@ function LogoCard({ src }) {
   return (
     <div
       style={{
-        minWidth: 140,
-        height: 80,
-        borderRadius: 12,
+        minWidth: 80,
+        height: 60,
+        borderRadius: 4,
         background: "#fff",
         border: "1px solid rgba(0,0,0,0.06)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: 12,
+        // padding: ,
         transition: "transform 0.3s ease",
       }}
       onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
