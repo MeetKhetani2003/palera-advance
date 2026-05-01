@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Play, X } from "lucide-react";
 
 export default function VideoSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const modalVideoRef = useRef(null);
 
   // Prevent body scrolling when modal is open
   useEffect(() => {
@@ -17,17 +16,6 @@ export default function VideoSection() {
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [isModalOpen]);
-
-  // Force play when the modal opens
-  useEffect(() => {
-    if (isModalOpen && modalVideoRef.current) {
-      // Explicitly trigger play.
-      // This works reliably because opening the modal was triggered by a user click.
-      modalVideoRef.current.play().catch((error) => {
-        console.error("Browser blocked autoplay:", error);
-      });
-    }
   }, [isModalOpen]);
 
   return (
@@ -69,7 +57,7 @@ export default function VideoSection() {
           {/* Modal Container */}
           <div
             className="relative w-full max-w-6xl aspect-video bg-black rounded-2xl shadow-2xl overflow-hidden flex items-center justify-center"
-            onClick={(e) => e.stopPropagation()} // Prevent clicks on the video from closing the modal
+            onClick={(e) => e.stopPropagation()} // Prevent clicks on the iframe from closing the modal
           >
             {/* Close Button */}
             <button
@@ -79,14 +67,17 @@ export default function VideoSection() {
               <X size={24} />
             </button>
 
-            {/* Active Video Player */}
-            <video
-              ref={modalVideoRef} // Attach the ref here
-              src="https://youtu.be/YOklBwFLIyY?si=mAWLVsX6acuMJwEU"
-              controls
-              autoPlay
-              className="w-full h-full object-contain outline-none"
-            />
+            {/* Active YouTube iframe */}
+            <iframe
+              className="w-full h-full outline-none"
+              // Note the /embed/ format and the ?autoplay=1 parameter
+              src="https://www.youtube.com/embed/YOklBwFLIyY?autoplay=1"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
       )}
