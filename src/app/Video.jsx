@@ -82,7 +82,7 @@ export default function VideoSection() {
             {/* Active Video Player */}
             <video
               ref={modalVideoRef} // Attach the ref here
-              src="/computerview.mp4"
+              src="https://youtu.be/YOklBwFLIyY?si=mAWLVsX6acuMJwEU"
               controls
               autoPlay
               className="w-full h-full object-contain outline-none"

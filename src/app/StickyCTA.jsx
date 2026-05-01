@@ -72,24 +72,20 @@ export default function MobileCTA() {
   return (
     <div
       id="mobcta"
-      // REMOVED px-4 and pb-6 here so it docks to the edges perfectly
-      className={`fixed inset-x-0 bottom-0 z-40 md:hidden transition-transform duration-500 ease-in-out ${
+      className={`fixed inset-x-0 bottom-0 z-40 md:w-1/2 md:left-[25%] transition-transform duration-500 ease-in-out ${
         isVisible ? "translate-y-0" : "translate-y-[120%]"
       }`}
     >
       <div
         className="relative shadow-2xl flex items-center gap-3"
         style={{
-          // ADDED env(safe-area-inset-bottom) to handle iOS home bar padding gracefully
           padding: "20px 16px calc(12px + env(safe-area-inset-bottom)) 16px",
           background: "rgba(10, 22, 40, 0.98)",
           backdropFilter: "blur(12px)",
-          // Changed to borderTop only for a cleaner full-width look
           borderTop: "1px solid rgba(255,255,255,0.15)",
           borderRadius: "16px 16px 0 0",
         }}
       >
-        {/* --- TYPEWRITER STRIP --- */}
         <div
           className="absolute left-1/2 -translate-x-1/2 -top-4 flex items-center gap-1 bg-gold-400 text-navy-900 font-bold uppercase tracking-wider whitespace-nowrap"
           style={{
