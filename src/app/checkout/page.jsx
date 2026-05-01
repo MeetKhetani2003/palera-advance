@@ -125,6 +125,21 @@ function CheckoutContent() {
     setIsProcessing(false);
   };
 
+  // --- DYNAMIC TEXT LOGIC ---
+  let offerText =
+    "Buy before timer ends to unlock 14-day refund, lifetime access and free upgrades."; // Default Fallback
+
+  if (price === 799) {
+    offerText =
+      "Limited offer — secure your 7-day risk-free trial before timer ends.";
+  } else if (price === 4999) {
+    offerText =
+      "Limited offer — 14 months for the price of 12 + 7-day money-back guarantee.";
+  } else if (price === 14999) {
+    offerText =
+      "Buy before timer ends to unlock FREE Image Pack (worth ₹4,999) + 7-day refund guarantee.";
+  }
+
   return (
     <div className="min-h-screen bg-white pb-40 font-sans">
       <div className="max-w-xl mx-auto p-6 pt-10">
@@ -229,17 +244,15 @@ function CheckoutContent() {
         </div>
       </div>
 
-      {/* Floating Bottom Bar (Brand Theme: Navy & Gold) */}
+      {/* Floating Bottom Bar */}
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md bg-gradient-to-b from-[#1a2b44] to-[#0A1628] p-4 rounded-2xl shadow-[0_10px_40px_rgba(10,22,40,0.6)] border border-[#D4AF37]/20 z-50">
         {/* Top Timer Pill */}
         <div className="bg-[#0A1628]/80 border border-[#D4AF37]/10 rounded-full px-4 py-2.5 flex items-center gap-3 mb-4 shadow-inner">
-          <div className="text-[#D4AF37] text-xl font-light tracking-wider font-mono">
+          <div className="text-[#D4AF37] text-xl font-light tracking-wider font-mono shrink-0">
             {formatTime(timeLeft)}
           </div>
           <div className="text-[10px] leading-tight font-bold text-white/80">
-            Buy before timer ends to unlock 14-day
-            <br />
-            refund, lifetime access and free upgrades.
+            {offerText}
           </div>
         </div>
 
@@ -254,21 +267,16 @@ function CheckoutContent() {
             </span>
           </div>
 
-          {/* Shining Gold 'Pay Now' Button */}
+          {/* Pay Now Button */}
           <button
             onClick={handlePayment}
             disabled={isProcessing}
             className="group relative inline-flex overflow-hidden rounded-full bg-slate-800 p-[1.5px] transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:pointer-events-none"
           >
-            {/* 1. The Sweeping Gold Light */}
             <span className="absolute inset-[-100%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_0_at_50%_50%,rgba(212,175,55,1)_0deg,transparent_60deg,transparent_300deg,rgba(212,175,55,1)_360deg)] opacity-50 transition-opacity duration-300 group-hover:opacity-100" />
 
-            {/* 2. The Inner Content Wrapper */}
             <span className="relative flex h-full w-full items-center justify-center gap-2 rounded-full bg-[#0A1628] px-7 py-3 text-[15px] font-bold tracking-wide">
-              {/* 3. The Bottom Inner Gold Glow */}
               <span className="absolute bottom-0 left-1/2 h-1/3 w-4/5 -translate-x-1/2 rounded-full bg-[#D4AF37]/30 opacity-50 blur-md transition-all duration-500 group-hover:h-2/3 group-hover:opacity-100" />
-
-              {/* 4. Button Content (Icon + Text) */}
               <span className="relative z-10 flex items-center gap-2">
                 <Banknote size={18} className="text-[#D4AF37]" />
                 <span className="bg-gradient-to-b from-[#e8cf7a] to-[#D4AF37] bg-clip-text text-transparent">

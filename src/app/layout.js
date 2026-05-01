@@ -57,7 +57,6 @@ export default function RootLayout({ children }) {
           />
         </noscript>
         {children}
-        <MobileCTA />
       </body>
     </html>
   );

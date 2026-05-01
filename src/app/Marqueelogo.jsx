@@ -37,32 +37,47 @@ const logosRow3 = [
   "/logos/Asset 33.png",
 ];
 
-/* 🔁 Marquee wrapper (same style, improved smoothness) */
+/* 🔁 Marquee wrapper (Fixed for perfectly seamless looping) */
 function Marquee({ children, reverse = false }) {
   return (
     <div
       style={{
         overflow: "hidden",
         display: "flex",
+        gap: 24, // Gap between the two scrolling blocks
         position: "relative",
       }}
     >
+      {/* First track */}
       <div
         style={{
           display: "flex",
-          gap: 24,
-          width: "max-content",
+          gap: 24, // Gap between logos
+          flexShrink: 0,
+          minWidth: "max-content",
           animation: `${reverse ? "marqueeReverse" : "marquee"} 40s linear infinite`,
         }}
       >
         {children}
+      </div>
+      {/* Second track (Duplicate for seamless loop) */}
+      <div
+        aria-hidden="true"
+        style={{
+          display: "flex",
+          gap: 24, // Gap between logos
+          flexShrink: 0,
+          minWidth: "max-content",
+          animation: `${reverse ? "marqueeReverse" : "marquee"} 40s linear infinite`,
+        }}
+      >
         {children}
       </div>
     </div>
   );
 }
 
-/* 🧱 Logo Card (KEY FIX) */
+/* 🧱 Logo Card */
 function LogoCard({ src }) {
   return (
     <div
@@ -75,7 +90,6 @@ function LogoCard({ src }) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        // padding: ,
         transition: "transform 0.3s ease",
       }}
       onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
@@ -129,20 +143,21 @@ export default function TrustedClinicsMarquee() {
         </Marquee>
       </div>
 
-      {/* 🎬 MARQUEE ANIMATION */}
+      {/* 🎬 MARQUEE ANIMATION (Fixed calculation) */}
       <style jsx global>{`
         @keyframes marquee {
           from {
             transform: translateX(0);
           }
           to {
-            transform: translateX(-50%);
+            /* -100% shifts it entirely left, and the -24px accounts for the gap */
+            transform: translateX(calc(-100% - 24px));
           }
         }
 
         @keyframes marqueeReverse {
           from {
-            transform: translateX(-50%);
+            transform: translateX(calc(-100% - 24px));
           }
           to {
             transform: translateX(0);

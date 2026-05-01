@@ -11,6 +11,9 @@ import TrialOffer from "./TrialOffer";
 import CountUp from "react-countup";
 import MetricsSection from "./Metric";
 import { CheckCircle } from "lucide-react";
+import MobileCTA from "./StickyCTA";
+import Link from "next/link";
+import { FaWhatsapp } from "react-icons/fa";
 
 /* ─────────────────────────────────────────
   GLOBAL STYLES  (injected once via <style>)
@@ -1459,8 +1462,8 @@ export default function PaleraDesignPage() {
                 {
                   tag: "Reel pack 6 · yearly",
                   title: "72 reels a year",
-                  price: "₹15,000",
-                  rawPrice: 15000,
+                  price: "₹14,999",
+                  rawPrice: 14999,
                   unit: "/ year",
                   sub: "6 reels per month · 72 reels per year",
                   features: [
@@ -2187,6 +2190,13 @@ export default function PaleraDesignPage() {
                 Doctors' first choice for premium social media content. Built in
                 India, for healthcare.
               </p>
+              <Link
+                href="https://wa.me/7433860247"
+                className="btn-ghost"
+                style={{ marginTop: 16 }}
+              >
+                <FaWhatsapp size={20} />{" "}
+              </Link>
             </div>
           </div>
           <div
@@ -2215,6 +2225,7 @@ export default function PaleraDesignPage() {
             </div>
           </div>
         </footer>
+        <MobileCTA />
       </main>
     </div>
   );

@@ -204,7 +204,7 @@ export default function FeaturesMarquee() {
                 key={i}
                 style={{
                   minWidth: 120,
-                  height: 200,
+                  height: 213.33,
                   overflow: "hidden",
                   background: "#000",
                 }}
