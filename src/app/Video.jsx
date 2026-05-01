@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Play, X } from "lucide-react";
 
 export default function VideoSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const modalVideoRef = useRef(null);
 
   // Prevent body scrolling when modal is open
   useEffect(() => {
@@ -16,6 +17,17 @@ export default function VideoSection() {
     return () => {
       document.body.style.overflow = "unset";
     };
+  }, [isModalOpen]);
+
+  // Force play when the modal opens
+  useEffect(() => {
+    if (isModalOpen && modalVideoRef.current) {
+      // Explicitly trigger play.
+      // This works reliably because opening the modal was triggered by a user click.
+      modalVideoRef.current.play().catch((error) => {
+        console.error("Browser blocked autoplay:", error);
+      });
+    }
   }, [isModalOpen]);
 
   return (
@@ -69,9 +81,10 @@ export default function VideoSection() {
 
             {/* Active Video Player */}
             <video
+              ref={modalVideoRef} // Attach the ref here
               src="/computerview.mp4"
               controls
-              autoPlay // Automatically starts playing when modal opens
+              autoPlay
               className="w-full h-full object-contain outline-none"
             />
           </div>
