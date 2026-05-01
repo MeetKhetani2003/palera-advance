@@ -938,7 +938,7 @@ export default function PaleraDesignPage() {
           >
             <span className="w-28">
               <Image
-                src={"/Palera-logox.png"}
+                src={"/Palera-logox.webp"}
                 alt="Palera Design"
                 width={500}
                 height={200}
