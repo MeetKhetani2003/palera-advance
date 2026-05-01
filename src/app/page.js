@@ -1015,17 +1015,15 @@ export default function PaleraDesignPage() {
             <div className="reveal hero-text">
               <div
                 style={{
-                  display: "inline-flex",
-                  alignItems: "flex-start",
-                  gap: 10,
                   borderRadius: 999,
                   background: "#fff",
                   border: "1px solid rgba(240,180,41,.3)",
                   padding: "6px 14px 6px 8px",
+                  marginRight: 30,
                 }}
                 className="shadow-card"
               >
-                <span
+                {/* <span
                   style={{
                     display: "inline-flex",
                     height: 20,
@@ -1038,10 +1036,11 @@ export default function PaleraDesignPage() {
                   }}
                 >
                   <Star size={11} />
-                </span>
+                </span> */}
                 <span
                   style={{
                     fontSize: 12,
+
                     fontWeight: 600,
                     letterSpacing: "0.08em",
                     textTransform: "uppercase",
