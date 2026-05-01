@@ -1039,7 +1039,7 @@ export default function PaleraDesignPage() {
                 </span> */}
                 <span
                   style={{
-                    fontSize: 12,
+                    fontSize: 9,
 
                     fontWeight: 600,
                     letterSpacing: "0.08em",
