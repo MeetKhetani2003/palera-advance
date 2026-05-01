@@ -131,33 +131,85 @@ export default function MobileCTA() {
             </span>
           </div>
         </div>
-
         <a
           href="#trial"
-          className="btn-primary flex-shrink-0 flex items-center gap-2"
+          className="group relative inline-flex overflow-hidden transition-all hover:scale-[1.02] active:scale-95"
           style={{
-            padding: "10px 14px",
-            fontSize: 13,
             textDecoration: "none",
-            backgroundColor: "#D4AF37",
-            color: "#0A1628",
-            borderRadius: "6px",
-            fontWeight: "bold",
+            padding: "1px", // Border thickness
+            borderRadius: "9999px",
+            backgroundColor: "#1e293b", // slate-800 base
           }}
         >
-          Start trial
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+          {/* 1. The Sweeping Gold Light */}
+          <span
+            className="absolute animate-spin opacity-40 transition-opacity duration-300 group-hover:opacity-100"
+            style={{
+              inset: "-100%",
+              animationDuration: "3s",
+              animationTimingFunction: "linear",
+              background:
+                "conic-gradient(from 0deg at 50% 50%, rgba(212,175,55,1) 0deg, transparent 60deg, transparent 300deg, rgba(212,175,55,1) 360deg)",
+            }}
+          />
+
+          {/* 2. The Inner Content Wrapper */}
+          <span
+            className="relative flex items-center justify-center font-bold tracking-wide"
+            style={{
+              width: "100%",
+              height: "100%",
+              gap: "10px",
+              borderRadius: "9999px",
+              backgroundColor: "#0A1628", // Inner dark blue
+              padding: "14px 32px",
+              fontSize: "15px",
+            }}
           >
-            <path d="M5 12h14M13 5l7 7-7 7" />
-          </svg>
+            {/* 3. The Bottom Inner Gold Glow */}
+            <span
+              className="absolute opacity-50 transition-all duration-500 group-hover:h-[66%] group-hover:opacity-100"
+              style={{
+                bottom: 0,
+                left: "50%",
+                transform: "translateX(-50%)",
+                height: "33%",
+                width: "80%",
+                borderRadius: "9999px",
+                backgroundColor: "#D4AF37", // Gold with 30% opacity
+                filter: "blur(12px)",
+              }}
+            />
+
+            {/* 4. Button Text */}
+            <span
+              className="relative z-10"
+              style={{
+                backgroundImage: "linear-gradient(to bottom, #e8cf7a, #D4AF37)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                color: "transparent", // Fallback
+              }}
+            >
+              Start trial
+            </span>
+
+            {/* 5. Button Icon */}
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="relative z-10 transition-transform duration-300 group-hover:translate-x-[2px]"
+              style={{ color: "#D4AF37" }}
+            >
+              <path d="M5 12h14M13 5l7 7-7 7" />
+            </svg>
+          </span>
         </a>
       </div>
     </div>

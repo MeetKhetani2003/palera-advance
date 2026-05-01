@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { ArrowLeft, ChevronDown } from "lucide-react";
+import { ArrowLeft, ChevronDown, Banknote } from "lucide-react";
+
 const SPECIALTIES = [
   "Dentists",
   "Dermatologists",
@@ -24,11 +25,11 @@ const SPECIALTIES = [
   "Pathologists",
   "Spine Surgeons",
 ];
+
 function CheckoutContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Get dynamic data from URL
   const planName = searchParams.get("plan") || "Premium Trial";
   const price = parseInt(searchParams.get("price")) || 799;
 
@@ -38,7 +39,27 @@ function CheckoutContent() {
     phone: "",
     speciality: "",
   });
+
   const [isProcessing, setIsProcessing] = useState(false);
+
+  // Timer State (5 minutes = 300 seconds)
+  const [timeLeft, setTimeLeft] = useState(300);
+
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+    const timerId = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(timerId);
+  }, [timeLeft]);
+
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, "0");
+    const s = (seconds % 60).toString().padStart(2, "0");
+    return `${m}:${s}`;
+  };
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -59,7 +80,6 @@ function CheckoutContent() {
     let currentLeadId = null;
 
     try {
-      // Send plan and amount to the DB
       const dbResponse = await fetch("/api/submit-form", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -78,7 +98,6 @@ function CheckoutContent() {
       console.error(error);
     }
 
-    // Razorpay logic (Existing)
     const orderData = await fetch("/api/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -107,7 +126,7 @@ function CheckoutContent() {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-32 font-sans">
+    <div className="min-h-screen bg-white pb-40 font-sans">
       <div className="max-w-xl mx-auto p-6 pt-10">
         <button
           onClick={() => window.history.back()}
@@ -120,9 +139,7 @@ function CheckoutContent() {
           Checkout: {planName}
         </h1>
 
-        {/* Premium Styled Form */}
         <div className="space-y-6">
-          {/* Full Name Field */}
           <div className="group">
             <label className="block text-[13px] font-bold text-[#0A1628] mb-2 uppercase tracking-wider opacity-90 transition-colors group-focus-within:text-[#00C39A]">
               Full Name *
@@ -139,7 +156,6 @@ function CheckoutContent() {
             </div>
           </div>
 
-          {/* Email Address Field */}
           <div className="group">
             <label className="block text-[13px] font-bold text-[#0A1628] mb-2 uppercase tracking-wider opacity-90 transition-colors group-focus-within:text-[#00C39A]">
               Email Address *{" "}
@@ -159,7 +175,6 @@ function CheckoutContent() {
             </div>
           </div>
 
-          {/* WhatsApp Field */}
           <div className="group">
             <label className="block text-[13px] font-bold text-[#0A1628] mb-2 uppercase tracking-wider opacity-90 transition-colors group-focus-within:text-[#00C39A]">
               WhatsApp Number *
@@ -175,6 +190,7 @@ function CheckoutContent() {
               />
             </div>
           </div>
+
           <div className="group">
             <label className="block text-[13px] font-bold text-[#0A1628] mb-2 uppercase tracking-wider opacity-90 transition-colors group-focus-within:text-[#00C39A]">
               Speciality *
@@ -197,7 +213,6 @@ function CheckoutContent() {
                   </option>
                 ))}
               </select>
-              {/* Custom Dropdown Arrow */}
               <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400">
                 <ChevronDown size={20} />
               </div>
@@ -214,18 +229,55 @@ function CheckoutContent() {
         </div>
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 p-4 bg-white/90 backdrop-blur-md border-t flex items-center justify-between">
-        <div>
-          <p className="text-xs text-slate-500">Total Amount</p>
-          <p className="text-xl font-bold text-[#0A1628]">₹{price}</p>
+      {/* Floating Bottom Bar (Brand Theme: Navy & Gold) */}
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md bg-gradient-to-b from-[#1a2b44] to-[#0A1628] p-4 rounded-2xl shadow-[0_10px_40px_rgba(10,22,40,0.6)] border border-[#D4AF37]/20 z-50">
+        {/* Top Timer Pill */}
+        <div className="bg-[#0A1628]/80 border border-[#D4AF37]/10 rounded-full px-4 py-2.5 flex items-center gap-3 mb-4 shadow-inner">
+          <div className="text-[#D4AF37] text-xl font-light tracking-wider font-mono">
+            {formatTime(timeLeft)}
+          </div>
+          <div className="text-[10px] leading-tight font-bold text-white/80">
+            Buy before timer ends to unlock 14-day
+            <br />
+            refund, lifetime access and free upgrades.
+          </div>
         </div>
-        <button
-          onClick={handlePayment}
-          disabled={isProcessing}
-          className="bg-[#00C39A] text-white px-8 py-3 rounded-lg font-bold"
-        >
-          {isProcessing ? "Processing..." : "Pay Now"}
-        </button>
+
+        {/* Bottom Row */}
+        <div className="flex justify-between items-center px-1">
+          <div className="flex flex-col">
+            <span className="text-2xl font-bold text-white tracking-tight">
+              ₹{price}/-
+            </span>
+            <span className="text-[11px] text-[#D4AF37] font-medium uppercase tracking-wider">
+              Total Amount
+            </span>
+          </div>
+
+          {/* Shining Gold 'Pay Now' Button */}
+          <button
+            onClick={handlePayment}
+            disabled={isProcessing}
+            className="group relative inline-flex overflow-hidden rounded-full bg-slate-800 p-[1.5px] transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:pointer-events-none"
+          >
+            {/* 1. The Sweeping Gold Light */}
+            <span className="absolute inset-[-100%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_0_at_50%_50%,rgba(212,175,55,1)_0deg,transparent_60deg,transparent_300deg,rgba(212,175,55,1)_360deg)] opacity-50 transition-opacity duration-300 group-hover:opacity-100" />
+
+            {/* 2. The Inner Content Wrapper */}
+            <span className="relative flex h-full w-full items-center justify-center gap-2 rounded-full bg-[#0A1628] px-7 py-3 text-[15px] font-bold tracking-wide">
+              {/* 3. The Bottom Inner Gold Glow */}
+              <span className="absolute bottom-0 left-1/2 h-1/3 w-4/5 -translate-x-1/2 rounded-full bg-[#D4AF37]/30 opacity-50 blur-md transition-all duration-500 group-hover:h-2/3 group-hover:opacity-100" />
+
+              {/* 4. Button Content (Icon + Text) */}
+              <span className="relative z-10 flex items-center gap-2">
+                <Banknote size={18} className="text-[#D4AF37]" />
+                <span className="bg-gradient-to-b from-[#e8cf7a] to-[#D4AF37] bg-clip-text text-transparent">
+                  {isProcessing ? "Processing..." : "Pay Now"}
+                </span>
+              </span>
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   );
