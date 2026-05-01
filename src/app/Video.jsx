@@ -28,10 +28,14 @@ export default function VideoSection() {
         >
           {/* Silent Preview Video (Acts as a thumbnail) */}
           <video
-            src="/computerview.mp4"
+            // Hack: #t=0.001 forces iOS/Safari and Chrome to load the first frame
+            src="/computerview.mp4#t=0.001"
+            // Best Practice: Add a static image path here to show instantly
+            poster="/your-thumbnail-image.jpg"
             loop
             muted
             playsInline
+            preload="metadata"
             className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
           />
 
